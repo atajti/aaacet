@@ -13,15 +13,15 @@
 # train: széles DT: usrID, listaID, products
 # test: széles DT, de csak a teszt sorok vannak benne
 
-library(data.table)
-train_file="../../Train.csv"
-cetli_train <- fread(train_file,
-             na.strings=c("", "null", "NULL", "\\N", "NA"))
+# library(data.table)
+# train_file="../../Train.csv"
+# cetli_train <- fread(train_file,
+#              na.strings=c("", "null", "NULL", "\\N", "NA"))
 
-tr_wide <- dcast.data.table(cetliId.objectId ~ product,
-                            data=cetli_train,
-                            value.var="quantity",
-                            fun.aggregate=length)
+# tr_wide <- dcast.data.table(cetliId.objectId ~ product,
+#                             data=cetli_train,
+#                             value.var="quantity",
+#                             fun.aggregate=length)
 
 tr_tst <- function(train, n=801, ...){
   tr_full <- copy(train)
