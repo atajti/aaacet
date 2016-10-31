@@ -77,3 +77,31 @@ tr_tst <- function(train, n=801, ...){
 # és az összes elem számá megfelelő oszlopból álló DT lesz, 
 # amihez ha meg van adva, hozzácsapja az objectId-kat:
 # eljaras1(train_data, test_ids)
+
+
+
+#--------------------------------------------------------------------#
+### Kiértékelés ######################################################
+#--------------------------------------------------------------------#
+
+# a tr_tst()$test és az eljárás ereményét kérem be,
+# mindkettőt sortolom ObjectId szertin majd setnames(eredmény, tr_tst()$test)
+# nomeg sorszázalékot számítok
+# aztán a képlet.
+
+cetli_eval <- function(tst_res, model_res){
+  model_res <- model_res[order(tst_res$objectId),]
+  model_res[, (c("owner.objectId", "cetliId.objectId",
+                 "objectId")) := NULL]
+  tst_res[, (c("owner.objectId", "cetliId.objectId",
+               "objectId")) := NULL]
+
+  setcolorder(model_res, names(tst_res))
+
+  probs_what_count <- (as.matrix(model_res)/
+                       rowSums(as.matrix(model_res)))[as.matrix(tst_res)]
+
+  result <- -sum(log(probs_what_count))/nrow(tst_res)
+
+  return(result)
+}
