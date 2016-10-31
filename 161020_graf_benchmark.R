@@ -90,4 +90,25 @@ write.csv(graf_benchmark_szomszedok_sulytalan2,
           quote=FALSE)
 
 
-# kiszedem a benne lévőket
+
+# a listaelemektől való távolság mit tesz?
+prod_g <- graph_from_data_frame(tr_el[weight > 0], directed=FALSE)
+source("/media/munka/Win8_1/Documents and Settings/Andras/Desktop/percolationcloseness.R")
+
+prcl2 <- function(graph, infection){
+  dm <- (1/distances(graph))
+  diag(dm) <- 0
+  dm[!is.finite(dm)] <- 0
+  weight_matrix <- infection %*% t(1/(sum(infection)-infection))
+  weight_matrix[!is.finite(weight_matrix)] <- 0
+  dm <- dm * weight_matrix
+
+  res <- colSums(dm)
+  return(res)
+}
+
+
+
+
+
+
