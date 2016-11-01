@@ -33,8 +33,8 @@ tr_tst <- function(train, n=801, ...){
                       by=cetliId.objectId]
 
   # különszedem a kiválasztott itemeket
-  tr_sub <- tr_full[!(objectId %in% tst_item), ]
-  tst_sub <- tr_full[!(objectId %in% tst_item), ]
+  tr_sub <- tr_full[!(objectId %in% tst_item$tst_item), ]
+  tst_sub <- tr_full[(objectId %in% tst_item$tst_item), ]
 
   # megcsinálom a train set szálesítését:
   # a ... az elvégzendő dcasnak a paraméterei value.var-ra és fun.aggregate-re
@@ -56,6 +56,9 @@ tr_tst <- function(train, n=801, ...){
     data=tst_sub,
     value.var="product",
     fun.aggregate=length)
+  # a kimaradó oszlopokat is fel kell tölteni
+  tst_wide[, (setdiff(names(tr_wide),
+                      names(tst_wide))) := 0]
 
   # if(any(unlist(suppressWarnings(
   #    lapply(names(tst_wide),
