@@ -78,3 +78,13 @@ model_res <- basic_prcl_bmrk(train_test)
 
 cetli_eval(train_test$test, model_res)
 
+# 2 óra futás, 5 per 1 menet, 24 próba. akkor legyen 4 óra futás.
+
+prcl_benchmark <- numeric(50)
+for(i in 1:50){
+  train_test <- tr_tst(cetli_train)
+  model_res <- basic_prcl_bmrk(train_test)
+  prcl_benchmark[i] <- cetli_eval(train_test$test, model_res)
+  gc()
+}
+
