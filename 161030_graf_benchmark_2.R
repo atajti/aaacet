@@ -92,7 +92,7 @@ for(i in 1:50){
 #--------------------------------------------------------------------#
 ### Eljárás 2.: közös listák száma -> élsúly, ezen szűrök alulról ####
 #--------------------------------------------------------------------#
-
+#~4ó10perc egy 10-es kör
 
 
 limit_prcl_bmrk <- function(train_test, limit){
@@ -156,4 +156,5 @@ for(lim in limits){
     gc()
   }
 }
+
 
