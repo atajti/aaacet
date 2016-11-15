@@ -394,3 +394,27 @@ for(i in 3:(ncol(mego2))){
 }
 
 cetli_eval(copy(train_test$test), mego2)
+
+eval_data <- fread("../../Test.csv")
+
+res_wide <- res_wide[cetliId.objectId %in% eval_data$cetliId.objectId,]
+res_obj <- eval_data[, .(cetliId.objectId, objectId),
+                     res_wide,
+                     on="cetliId.objectId"][, cetliId.objectId:= NULL][,cetliId.objectId:= NULL]
+setcolorder(res_obj,
+            c("objectId",
+              sort(names(res_obj)[which(names(res_obj)!="objectId")])))
+
+mego2 <- copy(res_obj)
+for(i in 2:(ncol(mego2))){
+  set(mego2, j=as.integer(i), value=mego2[[i]]^10)
+}
+
+write.csv(res_obj,
+          file="../../weighted_graph_benchmark.csv",
+          quote=FALSE,
+          row.names=FALSE)
+write.csv(mego2,
+          file="../../weighted_graph_benchmark_powered.csv",
+          quote=FALSE,
+          row.names=FALSE)
